@@ -4,7 +4,7 @@ struct ReposListViewPageObject: NavigationPageObject {
     let app: XCUIApplication
 
     var isLoadingIndicatorVisible: Bool {
-        app.activityIndicators.firstMatch.isHittable
+        app.activityIndicators.firstMatch.exists
     }
 
     var isContentVisible: Bool {
