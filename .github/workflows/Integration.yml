@@ -6,8 +6,6 @@ on:
 
 jobs:
   all_tests:
-
-    needs: lint
     runs-on: macos-12
     timeout-minutes: 30
 
