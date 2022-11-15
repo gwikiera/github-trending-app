@@ -1,0 +1,96 @@
+name: Trending
+
+options:
+  bundleIdPrefix: com.gwikiera
+
+packages:
+  # local packages
+  DesignSystem:
+    path: DesignSystem
+  Networking:
+    path: Networking
+  # remote packages
+  SnapshotTesting:
+    url: "https://github.com/pointfreeco/swift-snapshot-testing"
+    from: "1.10.0"
+  CombineSchedulers:
+    url: "https://github.com/pointfreeco/combine-schedulers"
+    from: "0.9.1"
+
+targets:
+  Trending:
+    type: application
+    platform: iOS
+    deploymentTarget: "15.0"
+    configFiles:
+      Debug: Trending/Build Configs/Debug.xcconfig
+      Release: Trending/Build Configs/Release.xcconfig
+    dependencies:
+      - package: DesignSystem
+      - package: Networking
+      - package: CombineSchedulers
+    sources: [Trending]
+    postCompileScripts:
+      - name: swiftlint
+        script: |
+                export PATH="$PATH:/opt/homebrew/bin"
+                if which swiftlint > /dev/null; then
+                  swiftlint
+                else
+                  echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
+                fi
+  TrendingUnitTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: TrendingUnitTests
+        includes:
+          - "**/*.swift"
+    dependencies:
+      - target: Trending
+    settings:
+      # makes xcode use the only target as host app
+      - TEST_HOST: ""
+  TrendingSnapshotTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: TrendingSnapshotTests
+        includes:
+          - "**/*SnapshotTests.swift"
+        excludes:
+          - "**/test*.png"
+          - "**/__Snapshots__"
+    dependencies:
+      - target: Trending
+      - package: SnapshotTesting
+    settings:
+      # makes xcode use the only target as host app
+      - TEST_HOST: ""
+  TrendingUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - path: TrendingUITests
+        includes:
+          - "**/*.swift"
+    dependencies:
+      - target: Trending
+
+schemes:
+  Trending:
+    build:
+      targets:
+        Trending: [run, test, profile, analyze]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - TrendingUnitTests
+        - TrendingSnapshotTests
+        - TrendingUITests
+    profile:
+      config: Release
+    analyze:
+      config: Release
