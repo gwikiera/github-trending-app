@@ -1,21 +1,45 @@
 default_platform(:ios)
 
+test_device = "iPhone 14 Pro"
+
 platform :ios do
-  desc "Tests"
-  lane :tests do
+  desc "Unit Tests"
+  lane :unit_tests do
+    app_tests(only_testing: ["TrendingUnitTests"])
+    
+    networking_tests
+  end
+
+  desc "All Tests"
+  lane :all_tests do
+    app_tests
+    
+    networking_tests
+  end
+
+# Private lanes
+  private_lane :app_tests do |options|
     scan(
       scheme: 'Trending',
       device: "iPhone 14 Pro",
+      only_testing: options[:only_testing],
       result_bundle: true,
       output_directory: Dir.pwd + "/test_output/Trending"
     )
+  end
+  
+  private_lane :networking_tests do
+    output_directory = Dir.pwd + "/test_output/Networking"
+    
+    sh("rm -rf " + output_directory)
 
     scan(
       package_path: './Networking',
       scheme: 'Networking',
-      device: "iPhone 14 Pro",
+      device: test_device,
       result_bundle: true,
-      output_directory: Dir.pwd + "/test_output/Networking"
+      output_directory: output_directory
     )
   end
+
 end
