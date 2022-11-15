@@ -30,11 +30,4 @@ jobs:
       - run: brew install xcodegen
       - run: brew install swiftgen
       - run: sh bootstrap.sh
-      - run: fastlane tests
-      
-      - name: "Tests results"
-        uses: actions/upload-artifact@v3.0.0
-        if: failure()
-        with:
-          name: fastlane-output 
-          path: fastlane/test_output/
+      - run: fastlane unit_tests
