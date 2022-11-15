@@ -1,0 +1,8 @@
+// MARK: - Repos list
+"ReposList.Title" = "Trending repos";
+"ReposList.Error.Label" = "Something went wrong.";
+"ReposList.Error.Button" = "Try again!";
+
+// MARK: - Repo details
+"RepoDetails.Rank" = "Rank";
+"RepoDetails.Authors" = "Authors";

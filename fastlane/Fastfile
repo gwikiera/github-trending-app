@@ -1,0 +1,21 @@
+default_platform(:ios)
+
+platform :ios do
+  desc "Tests"
+  lane :tests do
+    scan(
+      scheme: 'Trending',
+      device: "iPhone 14 Pro",
+      result_bundle: true,
+      output_directory: Dir.pwd + "/test_output/Trending"
+    )
+
+    scan(
+      package_path: './Networking',
+      scheme: 'Networking',
+      device: "iPhone 14 Pro",
+      result_bundle: true,
+      output_directory: Dir.pwd + "/test_output/Networking"
+    )
+  end
+end
