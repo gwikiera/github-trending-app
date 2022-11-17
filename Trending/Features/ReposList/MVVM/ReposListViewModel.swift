@@ -33,7 +33,6 @@ class ReposListViewModel: ObservableObject {
 
     private func bindData() {
         Current.reposRepository.repos()
-            .filter { !$0.isEmpty }
             .map { $0.map(\.repoCellViewState) }
             .map(ViewState.content)
             .receive(on: Current.scheduler)

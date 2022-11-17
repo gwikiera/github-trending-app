@@ -38,8 +38,6 @@ final class ReposRepositoryTests: XCTestCase {
         } catch {
             // Then
             XCTAssertEqual(error as? ErrorStub, errorStub)
-            let result = try await sut.repos().firstResult().get()
-            XCTAssertEqual(result, [])
         }
     }
 }

@@ -19,4 +19,8 @@ class MockReposRepository: ReposRepositoryType {
     func fetchRepos() async throws {
         reposSubject.value = try fetchResult.get()
     }
+
+    func closeSubject() {
+        reposSubject.send(completion: .finished)
+    }
 }
