@@ -11,7 +11,9 @@ struct ReposList: ReducerProtocol {
         var cle: CLE
         var selectedRepoId: Repo.ID?
         var selectedRepoViewState: RepoDetailsView.ViewState? {
-            return selectedRepoId.flatMap(Current.reposRepository.repo)?.repoDetailsViewState
+            guard let selectedRepoId else { return nil }
+            @Dependency(\.reposRepository) var reposRepository
+            return reposRepository.repo(for: selectedRepoId)?.repoDetailsViewState
         }
     }
 
@@ -23,13 +25,15 @@ struct ReposList: ReducerProtocol {
         case setSelectedRepoId(Repo.ID?)
     }
 
+    @Dependency(\.reposRepository) private var reposRepository
+    @Dependency(\.mainQueue) private var mainQueue
+
     func reduce(into state: inout ReposList.ViewState, action: Action) -> EffectTask<Action> {
         switch action {
         case .onAppear:
-            return Current.reposRepository.repos()
-                .dropFirst()
+            return reposRepository.repos()
                 .map(Action.fetchedRepos)
-                .receive(on: Current.scheduler)
+                .receive(on: mainQueue)
                 .eraseToEffect()
         case .fetchRepos:
             if state.cle == .error {
@@ -39,7 +43,7 @@ struct ReposList: ReducerProtocol {
             return .task {
                 await .fetchReposResponse(
                     TaskResult {
-                        try await Current.reposRepository.fetchRepos()
+                        try await reposRepository.fetchRepos()
                     }
                 )
             }

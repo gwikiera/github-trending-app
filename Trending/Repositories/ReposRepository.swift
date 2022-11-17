@@ -13,16 +13,17 @@ protocol ReposRepositoryType {
 }
 
 final class ReposRepository: ReposRepositoryType {
-    private var reposSubject = CurrentValueSubject<[Repo], Never>([])
+    private var reposSubject = CurrentValueSubject<[Repo]?, Never>(nil)
 
     // Queries
     func repos() -> AnyPublisher<[Repo], Never> {
         return reposSubject
+            .compactMap { $0 }
             .eraseToAnyPublisher()
     }
 
     func repo(for id: Repo.ID) -> Repo? {
-        reposSubject.value.first { $0.id == id }
+        reposSubject.value?.first { $0.id == id }
     }
 
     // Commands
