@@ -10,8 +10,16 @@ final class TrendingSnapshotTests: XCTestCase {
         Trending.animationsEnabled = false
     }
 
+    // MARK: - RootView
+    func testRootView() {
+        let sut = RootView()
+
+        assertSnapshots(sut)
+    }
+
+    // MARK: - ReposListView
     func testReposListView_Content() {
-        let sut = ReposListView(viewState: .content(Array(repeating: .preview, count: 25)))
+        let sut = ReposListView(viewState: .content(.preview))
 
         assertSnapshots(sut)
     }
@@ -28,6 +36,26 @@ final class TrendingSnapshotTests: XCTestCase {
         assertSnapshots(sut)
     }
 
+    // MARK: - ReposListView
+    func testReposListViewTCA_Content() {
+        let sut = ReposListViewTCA(store: .preview(.init(cle: .content(.preview))))
+
+        assertSnapshots(sut)
+    }
+
+    func testReposListViewTCA_Loading() {
+        let sut = ReposListViewTCA(store: .preview(.init(cle: .loading)))
+
+        assertSnapshots(sut)
+    }
+
+    func testReposListViewTCA_Error() {
+        let sut = ReposListViewTCA(store: .preview(.init(cle: .error)))
+
+        assertSnapshots(sut)
+    }
+
+    // MARK: - RepoDetailsView
     func testRepoDetails() {
         let sut = RepoDetailsView(viewState: .preview)
 

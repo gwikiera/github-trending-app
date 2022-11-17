@@ -1,3 +1,9 @@
+// MARK: - Root view
+"RootView.Title" = "Trending";
+"RootView.TrendingRepos.Title" = "Trending GitHub repos.";
+"RootView.MVVM" = "**MVVM** Version";
+"RootView.TCA" = "**TCA** Version";
+
 // MARK: - Repos list
 "ReposList.Title" = "Trending repos";
 "ReposList.Error.Label" = "Something went wrong.";

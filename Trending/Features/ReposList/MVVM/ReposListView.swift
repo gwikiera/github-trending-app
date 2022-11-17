@@ -72,7 +72,7 @@ struct ReposListView: View {
 #if DEBUG
 struct ReposListView_Previews: PreviewProvider {
     static var previews: some View {
-        ReposListView(viewState: .content(Array(repeating: .preview, count: 25)))
+        ReposListView(viewState: .content(.preview))
             .previewDisplayName("Content")
 
         ReposListView(viewState: .loading)
@@ -89,6 +89,12 @@ extension ReposListView {
         let viewModel = ReposListViewModel()
         viewModel.viewState = viewState
         self.init(viewModel: viewModel)
+    }
+}
+
+extension Array where Element == RepoCell.ViewState {
+    static var preview: Self {
+        .init(repeating: .preview, count: 25)
     }
 }
 #endif
