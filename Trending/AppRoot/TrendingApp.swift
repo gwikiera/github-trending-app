@@ -5,7 +5,7 @@ struct TrendingApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                ReposListView()
+                RootView()
             }
         }
     }
