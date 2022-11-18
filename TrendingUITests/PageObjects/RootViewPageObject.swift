@@ -4,14 +4,14 @@ struct RootViewPageObject: NavigationPageObject {
     let app: XCUIApplication
 
     var isPageVisible: Bool {
-        app.navigationBars["Trending"].exists
+        app.navigationBars[A11yIDs.RootView.navigationBarTitle].exists
     }
 
     func tapTrendingReposMVVM() {
-        app.buttons["RootView.TrendingRepos.MVVM"].tap()
+        app.buttons[A11yIDs.RootView.trendingReposMVVM].tap()
     }
 
     func tapTrendingReposTCA() {
-        app.buttons["RootView.TrendingRepos.TCA"].tap()
+        app.buttons[A11yIDs.RootView.trendingReposTCA].tap()
     }
 }

@@ -4,7 +4,7 @@ struct RepoDetailsPageObject: NavigationPageObject {
     let app: XCUIApplication
 
     var isPageVisible: Bool {
-        app.staticTexts["RepoDetails"].waitForExistence(timeout: 10)
+        app.staticTexts[A11yIDs.RepoDetails.id].waitForExistence(timeout: 10)
     }
 
     func tapBack() {

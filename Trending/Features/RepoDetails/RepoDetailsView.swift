@@ -95,7 +95,7 @@ struct RepoDetailsView: View {
             }
             .padding(24)
             .navigationTitle(viewState.name)
-            .accessibilityIdentifier("RepoDetails")
+            .accessibilityIdentifier(A11yIDs.RepoDetails.id)
         }
     }
 }
