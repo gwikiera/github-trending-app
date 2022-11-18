@@ -33,7 +33,7 @@ targets:
       - package: ComposableArchitecture
       - package: Networking
       - package: CombineSchedulers
-    sources: [Trending]
+    sources: [Trending, Shared]
     postCompileScripts:
       - name: swiftlint
         script: |
@@ -78,6 +78,9 @@ targets:
       - path: TrendingUITests
         includes:
           - "**/*.swift"
+      - path: Shared
+        includes:
+          - "**/*.swift"
     dependencies:
       - target: Trending
 
@@ -86,6 +89,25 @@ schemes:
     build:
       targets:
         Trending: [run, test, profile, analyze]
+      preActions:
+        - name: swiftgen
+          script: |
+                  if [[ -z "$CI" ]]; then
+                    RUNNING_ON_CI=false
+                  else
+                    RUNNING_ON_CI=$CI
+                  fi
+                  if [[ "$RUNNING_ON_CI" = false ]]; then
+                    export SWIFTGEN_PATH="${HOMEBREW_PREFIX}/bin/swiftgen"
+                    if which "${SWIFTGEN_PATH}" >/dev/null; then
+                      "${SWIFTGEN_PATH}" config run --config ${SRCROOT}/swiftgen.yml
+                    else
+                      echo "Warning: SwiftGen not installed"
+                    fi
+                  else
+                    echo 'SwiftGen disabled for CI.'
+                  fi
+          settingsTarget: "Trending"
     run:
       config: Debug
     test:

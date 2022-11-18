@@ -9,14 +9,14 @@ struct RootView: View {
                 } label: {
                     Text(L10n.RootView.mvvm.markdownFormatted)
                 }
-                .accessibilityIdentifier("RootView.TrendingRepos.MVVM")
+                .accessibilityIdentifier(A11yIDs.RootView.trendingReposMVVM)
 
                 NavigationLink {
                     ReposListViewTCA()
                 } label: {
                     Text(L10n.RootView.tca.markdownFormatted)
                 }
-                .accessibilityIdentifier("RootView.TrendingRepos.TCA")
+                .accessibilityIdentifier(A11yIDs.RootView.trendingReposTCA)
             }
         }
         .listStyle(.inset)
