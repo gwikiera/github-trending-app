@@ -23,6 +23,7 @@ platform :ios do
       scheme: 'Trending',
       device: "iPhone 14 Pro",
       only_testing: options[:only_testing],
+      code_coverage: true,
       result_bundle: true,
       output_directory: Dir.pwd + "/test_output/Trending"
     )
@@ -37,6 +38,7 @@ platform :ios do
       package_path: './Networking',
       scheme: 'Networking',
       device: test_device,
+      code_coverage: true,
       result_bundle: true,
       output_directory: output_directory
     )
