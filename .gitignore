@@ -96,3 +96,5 @@ Trending.xcodeproj/
 DesignSystem/Sources/DesignSystem/Generated/Assets.swift
 Trending/Generated/Strings.swift
 
+## Bundler
+vendor/
