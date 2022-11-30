@@ -1,16 +1,17 @@
 import XCTest
+import Model
 @testable import Trending
 
 // swiftlint:disable implicitly_unwrapped_optional
 final class ReposRepositoryTests: XCTestCase {
-    var apiClient: MockAPIClient!
+    var apiClient: MockGitHubAPIClient!
     var sut: ReposRepository!
 
     override func setUp() async throws {
         try await super.setUp()
 
-        apiClient = MockAPIClient()
-        Current.apiClient = apiClient
+        apiClient = MockGitHubAPIClient()
+        Current.gitHubApiClient = apiClient
         sut = ReposRepository()
     }
 

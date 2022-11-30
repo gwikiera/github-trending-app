@@ -11,6 +11,8 @@ packages:
     path: Networking
   Model:
     path: Model
+  GitHubAPIClient:
+    path: GitHubAPIClient
   # remote packages
   ComposableArchitecture:
     url: "https://github.com/pointfreeco/swift-composable-architecture"
@@ -36,6 +38,7 @@ targets:
       - package: Networking
       - package: CombineSchedulers
       - package: Model
+      - package: GitHubAPIClient
     sources: [Trending, Shared]
     postCompileScripts:
       - name: swiftlint

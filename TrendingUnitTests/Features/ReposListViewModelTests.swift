@@ -1,4 +1,5 @@
 import XCTest
+import Model
 @testable import Trending
 
 // swiftlint:disable implicitly_unwrapped_optional

@@ -1,5 +1,6 @@
 import ComposableArchitecture
 import XCTest
+import Model
 @testable import Trending
 
 @MainActor
