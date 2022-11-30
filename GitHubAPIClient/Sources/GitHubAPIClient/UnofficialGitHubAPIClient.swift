@@ -15,7 +15,7 @@ public struct UnofficialGitHubAPIClient: GitHubAPIClient {
     public func trendingRepos() async throws -> [Model.Repo] {
         try await apiClient
             .fetch([RepoDTO].self, for: url)
-            .map(\.repo)
+            .map(\.mapped)
     }
 }
 
@@ -39,27 +39,27 @@ private struct RepoDTO: Decodable {
 }
 
 private extension RepoDTO {
-    var repo: Repo {
+    var mapped: Repo {
         .init(
             name: repositoryName,
             rank: rank,
             url: url,
             description: description,
-            language: repoLanguage,
+            language: mappedLanguage,
             totalStars: totalStars,
             forks: forks,
-            authors: builtBy.map(\.author)
+            authors: builtBy.map(\.mapped)
         )
     }
 
-    var repoLanguage: Repo.Language? {
+    var mappedLanguage: Repo.Language? {
         guard let language, let languageColor else { return nil }
         return .init(name: language, colorHex: languageColor)
     }
 }
 
 private extension RepoDTO.Author {
-    var author: Repo.Author {
+    var mapped: Repo.Author {
         .init(username: username, url: url, avatar: avatar)
     }
 }
