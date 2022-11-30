@@ -1,4 +1,5 @@
 import SwiftUI
+import Model
 
 struct RepoDetailsView: View {
     struct ViewState: Equatable {

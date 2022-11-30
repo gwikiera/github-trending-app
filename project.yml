@@ -9,6 +9,8 @@ packages:
     path: DesignSystem
   Networking:
     path: Networking
+  Model:
+    path: Model
   # remote packages
   ComposableArchitecture:
     url: "https://github.com/pointfreeco/swift-composable-architecture"
@@ -33,6 +35,7 @@ targets:
       - package: ComposableArchitecture
       - package: Networking
       - package: CombineSchedulers
+      - package: Model
     sources: [Trending, Shared]
     postCompileScripts:
       - name: swiftlint

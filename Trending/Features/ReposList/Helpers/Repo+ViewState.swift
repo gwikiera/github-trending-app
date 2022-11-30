@@ -1,4 +1,5 @@
 import Foundation
+import Model
 
 extension Repo {
     var repoCellViewState: RepoCell.ViewState {
