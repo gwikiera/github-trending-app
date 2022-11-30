@@ -3,6 +3,18 @@ name: Trending
 options:
   bundleIdPrefix: com.gwikiera
 
+configs:
+  Debug: debug
+  Debug-Unofficial: debug
+  Debug-Mock: debug
+  Release: release
+
+configFiles:
+  Debug: Trending/Build Configs/Debug.xcconfig
+  Debug-Unofficial: Trending/Build Configs/Debug-Unofficial.xcconfig
+  Debug-Mock: Trending/Build Configs/Debug-Mock.xcconfig
+  Release: Trending/Build Configs/Release.xcconfig
+
 packages:
   # local packages
   DesignSystem:
@@ -29,9 +41,6 @@ targets:
     type: application
     platform: iOS
     deploymentTarget: "15.0"
-    configFiles:
-      Debug: Trending/Build Configs/Debug.xcconfig
-      Release: Trending/Build Configs/Release.xcconfig
     dependencies:
       - package: DesignSystem
       - package: ComposableArchitecture
