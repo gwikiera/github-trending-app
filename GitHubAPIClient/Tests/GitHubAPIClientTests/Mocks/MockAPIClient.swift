@@ -3,7 +3,7 @@ import Networking
 import XCTest
 @testable import GitHubAPIClient
 
-// swiftlint:disable force_cast implicitly_unwrapped_optional
+// swiftlint:disable implicitly_unwrapped_optional
 class MockAPIClient: APIClient {
     var fetchData: Result<Data, Error>!
 
