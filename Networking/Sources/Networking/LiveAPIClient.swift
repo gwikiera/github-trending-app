@@ -27,7 +27,7 @@ public class LiveAPIClient: APIClient {
             throw APIClientError.networkingError(error)
         }
 
-        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+        if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
             throw APIClientError.invalidResponseCode
         }
 

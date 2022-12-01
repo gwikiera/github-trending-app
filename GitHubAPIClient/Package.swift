@@ -16,6 +16,11 @@ let package = Package(
         .package(name: "Networking", path: "../Networking")
     ],
     targets: [
-        .target(name: "GitHubAPIClient")
+        .target(
+            name: "GitHubAPIClient",
+            resources: [
+                .process("Resources/colors.json")
+            ]
+        ),
     ]
 )

@@ -2,6 +2,8 @@ name: Trending
 
 options:
   bundleIdPrefix: com.gwikiera
+  groupOrdering: 
+    - order: [Packages, Trending, TrendingUnitTests, TrendingSnapshotTests, TrendingUITests, Shared, Build Configs, Products]
 
 configs:
   Debug: debug
