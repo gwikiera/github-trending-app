@@ -8,6 +8,8 @@ platform :ios do
     app_tests(only_testing: ["TrendingUnitTests"])
     
     networking_tests
+
+    gitHubAPIClient_tests
   end
 
   desc "All Tests"
@@ -15,6 +17,8 @@ platform :ios do
     app_tests
     
     networking_tests
+
+    gitHubAPIClient_tests
   end
 
 # Private lanes
@@ -28,7 +32,7 @@ platform :ios do
       output_directory: Dir.pwd + "/test_output/Trending"
     )
   end
-  
+
   private_lane :networking_tests do
     output_directory = Dir.pwd + "/test_output/Networking"
     
@@ -37,6 +41,21 @@ platform :ios do
     scan(
       package_path: './Networking',
       scheme: 'Networking',
+      device: test_device,
+      code_coverage: true,
+      result_bundle: true,
+      output_directory: output_directory
+    )
+  end
+
+  private_lane :gitHubAPIClient_tests do
+    output_directory = Dir.pwd + "/test_output/GitHubAPIClient"
+    
+    sh("rm -rf " + output_directory)
+
+    scan(
+      package_path: './GitHubAPIClient',
+      scheme: 'GitHubAPIClient',
       device: test_device,
       code_coverage: true,
       result_bundle: true,
