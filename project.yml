@@ -136,7 +136,6 @@ schemes:
         - path: TestPlans/UnitTests.xctestplan
         - path: TestPlans/AllTests.xctestplan
           defaultPlan: true
-
     profile:
       config: Release
     analyze:
