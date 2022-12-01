@@ -1,0 +1,43 @@
+{
+  "configurations" : [
+    {
+      "id" : "F8CDD0AD-DDB7-46ED-A21F-C33A1474DCAD",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:Trending.xcodeproj",
+      "identifier" : "B77A71D9FC4E784433C767E2",
+      "name" : "Trending"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Trending.xcodeproj",
+        "identifier" : "DEE485EA6D84B0358FD2ADEB",
+        "name" : "TrendingUnitTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:GitHubAPIClient",
+        "identifier" : "GitHubAPIClientTests",
+        "name" : "GitHubAPIClientTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Networking",
+        "identifier" : "NetworkingTests",
+        "name" : "NetworkingTests"
+      }
+    }
+  ],
+  "version" : 1
+}
