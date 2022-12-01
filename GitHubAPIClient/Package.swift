@@ -22,5 +22,17 @@ let package = Package(
                 .process("Resources/colors.json")
             ]
         ),
+        .testTarget(
+            name: "GitHubAPIClientTests",
+            dependencies: [
+                "GitHubAPIClient",
+                "Model",
+                "Networking"
+            ],
+            resources: [
+                .copy("Files/officialReposResponse.json"),
+                .copy("Files/unofficialReposResponse.json")
+            ]
+        )
     ]
 )

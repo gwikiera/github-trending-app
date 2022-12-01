@@ -20,7 +20,7 @@ public class OfficialGitHubAPIClient: GitHubAPIClient {
             .fetch(ReposDTO.self, for: url)
         let (repos, colors) = try await (reposDTO, self.colors)
         return repos.items.enumerated().map { (index, item) in
-            item.mapped(with: index, colors: colors)
+            item.mapped(with: index + 1, colors: colors)
         }
     }
 
@@ -31,7 +31,8 @@ public class OfficialGitHubAPIClient: GitHubAPIClient {
                 assertionFailure()
                 return [:]
             }
-            let colors = try await apiClient.fetch([String: String].self, for: colorsURL)
+            let data = try Data(contentsOf: colorsURL)
+            let colors = try JSONDecoder().decode(ColorsDict.self, from: data)
             self.colorsCache = colors
             return colors
         }
@@ -40,7 +41,7 @@ public class OfficialGitHubAPIClient: GitHubAPIClient {
 
 // MARK: - DTO
 // swiftlint:disable nesting
-struct ReposDTO: Decodable {
+private struct ReposDTO: Decodable {
     struct Item: Decodable {
         struct Owner: Decodable {
             let login: String
