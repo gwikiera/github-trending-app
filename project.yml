@@ -2,6 +2,8 @@ name: Trending
 
 options:
   bundleIdPrefix: com.gwikiera
+  groupOrdering: 
+    - order: [Packages, Trending, TrendingUnitTests, TrendingSnapshotTests, TrendingUITests, TestPlans, Shared, Build Configs, Products]
 
 configs:
   Debug: debug
@@ -35,6 +37,9 @@ packages:
   CombineSchedulers:
     url: "https://github.com/pointfreeco/combine-schedulers"
     from: "0.9.1"
+
+fileGroups: 
+  - TestPlans
 
 targets:
   Trending:
@@ -127,10 +132,10 @@ schemes:
       config: Debug
     test:
       config: Debug
-      targets:
-        - TrendingUnitTests
-        - TrendingSnapshotTests
-        - TrendingUITests
+      testPlans:
+        - path: TestPlans/UnitTests.xctestplan
+        - path: TestPlans/AllTests.xctestplan
+          defaultPlan: true
     profile:
       config: Release
     analyze:

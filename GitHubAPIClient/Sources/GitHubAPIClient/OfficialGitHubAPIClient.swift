@@ -3,9 +3,12 @@ import Foundation
 import Networking
 import Model
 
-public struct OfficialGitHubAPIClient: GitHubAPIClient {
-    let url: URL
-    let apiClient: APIClient
+private typealias ColorsDict = [String: String]
+
+public class OfficialGitHubAPIClient: GitHubAPIClient {
+    private let url: URL
+    private let apiClient: APIClient
+    private var colorsCache: ColorsDict?
 
     public init(url: URL, apiClient: APIClient) {
         self.url = url
@@ -13,17 +16,32 @@ public struct OfficialGitHubAPIClient: GitHubAPIClient {
     }
 
     public func trendingRepos() async throws -> [Model.Repo] {
-        let reposDTO = try await apiClient
+        async let reposDTO = apiClient
             .fetch(ReposDTO.self, for: url)
-        return reposDTO.items.enumerated().map { (index, item) in
-            item.mapped(with: index)
+        let (repos, colors) = try await (reposDTO, self.colors)
+        return repos.items.enumerated().map { (index, item) in
+            item.mapped(with: index + 1, colors: colors)
+        }
+    }
+
+    private var colors: ColorsDict {
+        get async throws {
+            if let colorsCache { return colorsCache }
+            guard let colorsURL = Bundle.module.url(forResource: "colors", withExtension: "json") else {
+                assertionFailure()
+                return [:]
+            }
+            let data = try Data(contentsOf: colorsURL)
+            let colors = try JSONDecoder().decode(ColorsDict.self, from: data)
+            self.colorsCache = colors
+            return colors
         }
     }
 }
 
 // MARK: - DTO
 // swiftlint:disable nesting
-struct ReposDTO: Decodable {
+private struct ReposDTO: Decodable {
     struct Item: Decodable {
         struct Owner: Decodable {
             let login: String
@@ -54,22 +72,23 @@ struct ReposDTO: Decodable {
 }
 
 private extension ReposDTO.Item {
-    func mapped(with rank: Int) -> Repo {
+    func mapped(with rank: Int, colors: ColorsDict) -> Repo {
         .init(
             name: name,
             rank: rank,
             url: url,
             description: description,
-            language: repoLanguage,
+            language: languageMapped(with: colors),
             totalStars: stargazersCount,
             forks: forks,
             authors: [owner.mapped]
         )
     }
 
-    var repoLanguage: Repo.Language? {
+    func languageMapped(with colors: ColorsDict) -> Repo.Language? {
         guard let language else { return nil }
-        return .init(name: language, colorHex: "#000000")
+        let colorHex = colors[language.capitalized] ?? "#000000"
+        return .init(name: language, colorHex: colorHex)
     }
 }
 

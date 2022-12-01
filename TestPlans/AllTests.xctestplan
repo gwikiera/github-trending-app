@@ -1,0 +1,52 @@
+{
+  "configurations" : [
+    {
+      "id" : "D9AF5ECC-D678-4829-A3D1-3652DE43DCF7",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:GitHubAPIClient",
+        "identifier" : "GitHubAPIClientTests",
+        "name" : "GitHubAPIClientTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Networking",
+        "identifier" : "NetworkingTests",
+        "name" : "NetworkingTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Trending.xcodeproj",
+        "identifier" : "5264C5378A731080A0D9010C",
+        "name" : "TrendingSnapshotTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Trending.xcodeproj",
+        "identifier" : "DD40472C377A527455B2E962",
+        "name" : "TrendingUITests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Trending.xcodeproj",
+        "identifier" : "DEE485EA6D84B0358FD2ADEB",
+        "name" : "TrendingUnitTests"
+      }
+    }
+  ],
+  "version" : 1
+}
