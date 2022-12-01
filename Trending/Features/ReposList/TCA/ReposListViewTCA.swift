@@ -1,6 +1,7 @@
 import SwiftUI
 import DesignSystem
 import ComposableArchitecture
+import Model
 
 struct ReposListViewTCA: View {
     let store: StoreOf<ReposList>

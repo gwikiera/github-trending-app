@@ -1,4 +1,5 @@
 import ComposableArchitecture
+import Model
 
 struct ReposList: ReducerProtocol {
     struct ViewState: Equatable {

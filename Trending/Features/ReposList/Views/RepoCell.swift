@@ -1,11 +1,17 @@
 import SwiftUI
+import Model
 
 struct RepoCell: View {
     struct ViewState: Equatable {
+        struct Language: Equatable { // swiftlint:disable:this nesting
+            let name: String
+            let color: Color
+        }
+
         let id: Repo.ID
         let name: String
         let description: String?
-        let language: Repo.Language?
+        let language: Language?
         let stars: Int
         let forks: Int
     }

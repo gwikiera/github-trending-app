@@ -5,7 +5,7 @@ extension RepoCell.ViewState {
     static func stub(
         name: String = "bestRepoEver",
         description: String? = nil,
-        language: Repo.Language? = nil,
+        language: Language? = nil,
         stars: Int = .max,
         forks: Int = 0
     ) -> RepoCell.ViewState {

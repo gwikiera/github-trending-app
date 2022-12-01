@@ -1,4 +1,5 @@
 import Foundation
+import Model
 @testable import Trending
 
 extension Repo {
@@ -7,8 +8,7 @@ extension Repo {
         rank: Int = .max,
         url: URL = "https://github.com/gwikiera/github-trending-app",
         description: String? = nil,
-        languageName: String? = nil,
-        languageColor: String? = nil,
+        language: Language? = nil,
         totalStars: Int = .max,
         forks: Int = 0,
         authors: [Author] = []
@@ -18,8 +18,7 @@ extension Repo {
             rank: rank,
             url: url,
             description: description,
-            languageName: languageName,
-            languageColor: languageColor,
+            language: language,
             totalStars: totalStars,
             forks: forks,
             authors: authors

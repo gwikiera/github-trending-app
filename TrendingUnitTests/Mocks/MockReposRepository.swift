@@ -1,5 +1,6 @@
 import Foundation
 import Combine
+import Model
 @testable import Trending
 
 class MockReposRepository: ReposRepositoryType {

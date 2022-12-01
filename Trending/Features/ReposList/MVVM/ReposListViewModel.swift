@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import Model
 
 class ReposListViewModel: ObservableObject {
     enum ViewState: Equatable {

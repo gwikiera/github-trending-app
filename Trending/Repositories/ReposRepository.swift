@@ -2,6 +2,7 @@
 
 import Foundation
 import Combine
+import Model
 
 protocol ReposRepositoryType {
     // Queries
@@ -28,7 +29,6 @@ final class ReposRepository: ReposRepositoryType {
 
     // Commands
     func fetchRepos() async throws {
-        reposSubject.value = try await Current.apiClient
-            .fetch([Repo].self, for: Current.trendingReposURL)
+        reposSubject.value = try await Current.gitHubApiClient.trendingRepos()
     }
 }

@@ -3,4 +3,4 @@
 #include "Shared.xcconfig"
 
 BASE_URL = https:/$()/api.github.com/search/repositories?sort=stars&order=desc&q=created:%3E2022-11-01
-SWIFT_ACTIVE_COMPILATION_CONDITIONS = $(inherited) OFFICIAL_API
+SWIFT_ACTIVE_COMPILATION_CONDITIONS = $(inherited) DEBUG MOCK_API
