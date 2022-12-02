@@ -85,7 +85,6 @@ struct ReposListView_Previews: PreviewProvider {
 
 extension ReposListView {
     init(viewState: ReposListViewModel.ViewState) {
-        Current = .preview
         let viewModel = ReposListViewModel()
         viewModel.viewState = viewState
         self.init(viewModel: viewModel)
