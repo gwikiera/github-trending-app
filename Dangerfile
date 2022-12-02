@@ -1,5 +1,5 @@
 xcov.report(
-   scheme: 'Trending',
+   scheme: 'Trending-Mock',
    project: 'Trending.xcodeproj',
-   xccov_file_direct_path: './fastlane/test_output/Trending/Trending.xcresult'
+   xccov_file_direct_path: './fastlane/test_output/Trending/Trending-Mock.xcresult'
 )

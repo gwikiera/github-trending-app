@@ -11,7 +11,18 @@ struct World {
     var scheduler: AnySchedulerOf<DispatchQueue> = .main.eraseToAnyScheduler()
 }
 
-var Current = World() // swiftlint:disable:this identifier_name
+// swiftlint:disable identifier_name
+#if !DEBUG
+var Current = World()
+#else
+var Current: World = {
+    if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
+        return .preview
+    } else {
+        return World()
+    }
+}()
+#endif
 
 private var defaultGitHubAPIClient: GitHubAPIClient {
 #if OFFICIAL_API
@@ -19,6 +30,6 @@ private var defaultGitHubAPIClient: GitHubAPIClient {
 #elseif UNOFFICIAL_API
     return UnofficialGitHubAPIClient(url: Bundle.main.baseURL, apiClient: LiveAPIClient())
 #elseif MOCK_API
-    fatalError("Not implemented yet :(.")
+    return MockGitHubAPIClient()
 #endif
 }

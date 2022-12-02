@@ -106,6 +106,23 @@ targets:
 
 schemes:
   Trending:
+    templates:
+      - TrendingScheme
+    templateAttributes:
+      configName: Debug
+  Trending-Unofficial:
+    templates:
+      - TrendingScheme
+    templateAttributes:
+      configName: Debug-Unofficial
+  Trending-Mock:
+    templates:
+      - TrendingScheme
+    templateAttributes:
+      configName: Debug-Mock
+
+schemeTemplates:
+  TrendingScheme:
     build:
       targets:
         Trending: [run, test, profile, analyze]
@@ -129,9 +146,9 @@ schemes:
                   fi
           settingsTarget: "Trending"
     run:
-      config: Debug
+      config: ${configName}
     test:
-      config: Debug
+      config: ${configName}
       testPlans:
         - path: TestPlans/UnitTests.xctestplan
         - path: TestPlans/AllTests.xctestplan
