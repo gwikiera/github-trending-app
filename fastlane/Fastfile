@@ -16,7 +16,7 @@ platform :ios do
 # Private lanes
   private_lane :test do |options|
     scan(
-      scheme: 'Trending',
+      scheme: 'Trending-Mock',
       device: "iPhone 14 Pro",
       clean: true,
       testplan: options[:test_plan],

@@ -19,6 +19,6 @@ private var defaultGitHubAPIClient: GitHubAPIClient {
 #elseif UNOFFICIAL_API
     return UnofficialGitHubAPIClient(url: Bundle.main.baseURL, apiClient: LiveAPIClient())
 #elseif MOCK_API
-    fatalError("Not implemented yet :(.")
+    return MockGitHubAPIClient()
 #endif
 }
