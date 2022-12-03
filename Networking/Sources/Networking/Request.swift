@@ -3,6 +3,7 @@ import Foundation
 public struct Request {
     public struct Endpoint {
         let url: () -> URL?
+
         public init(url: @escaping () -> URL?) {
             self.url = url
         }
