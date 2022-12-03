@@ -8,6 +8,7 @@ final class TrendingSnapshotTests: XCTestCase {
         try await super.setUp()
 
         Trending.animationsEnabled = false
+        Current = World()
     }
 
     // MARK: - RootView
