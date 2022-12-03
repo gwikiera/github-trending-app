@@ -13,8 +13,13 @@ public struct UnofficialGitHubAPIClient: GitHubAPIClient {
     }
 
     public func trendingRepos() async throws -> [Model.Repo] {
-        try await apiClient
-            .fetch([RepoDTO].self, for: url)
+        let endpoint = Request.Endpoint(
+            baseURL: url,
+            path: Endpoint.repositories
+        )
+        let request = Request(endpoint: endpoint)
+        return try await apiClient
+            .fetch([RepoDTO].self, request: request)
             .map(\.mapped)
     }
 }
@@ -38,6 +43,12 @@ private struct RepoDTO: Decodable {
     let builtBy: [Author]
 }
 
+// MARK: - Request
+private enum Endpoint {
+    static var repositories = "repositories"
+}
+
+// MARK: - DTO
 private extension RepoDTO {
     var mapped: Repo {
         .init(

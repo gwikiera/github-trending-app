@@ -6,8 +6,10 @@ import XCTest
 // swiftlint:disable implicitly_unwrapped_optional
 class MockAPIClient: APIClient {
     var fetchData: Result<Data, Error>!
+    var urlRequestSpy: URLRequest?
 
-    func fetch<Model>(_ type: Model.Type, request: URLRequest) async throws -> Model where Model: Decodable {
+    func fetch<Model>(_ type: Model.Type, urlRequest: URLRequest) async throws -> Model where Model: Decodable {
+        urlRequestSpy = urlRequest
         let data = try fetchData.get()
         return try JSONDecoder().decode(Model.self, from: data)
     }

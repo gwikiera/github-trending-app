@@ -82,10 +82,33 @@ final class LiveAPIClientTests: XCTestCase {
         // Then
         XCTAssertEqual(string, "Test")
     }
+
+    func testFetch_withRequest() async throws {
+        // Given
+        let data = try JSONEncoder().encode("Test")
+        let request = Request(
+            endpoint: .init(baseURL: .stub, path: "path", queryParameters: ["param1": "value1", "param2": "value2"]),
+            method: .post,
+            body: .init(data: { data }),
+            headers: ["key": "value"]
+        )
+        var urlRequest: URLRequest?
+        urlSession.dataStub = { request in
+            urlRequest = request
+            return (data, HTTPURLResponse(url: .stub, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+        }
+
+        // When
+        let string = try await sut.fetch(String.self, request: request)
+
+        // Then
+        XCTAssertEqual(string, "Test")
+        XCTAssertEqual(urlRequest?.url, URL(string: "http://www.example.com/path?param2=value2&param1=value1"))
+    }
 }
 
 private extension URL {
-    static var stub: URL { URL(string: "www.example.com")! }
+    static var stub: URL { URL(string: "http://www.example.com")! }
 }
 
 extension String: Error {}
