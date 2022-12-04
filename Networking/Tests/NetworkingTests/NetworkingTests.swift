@@ -87,7 +87,7 @@ final class LiveAPIClientTests: XCTestCase {
         // Given
         let data = try JSONEncoder().encode("Test")
         let request = Request(
-            endpoint: .init(baseURL: .stub, path: "path", queryParameters: ["param1": "value1", "param2": "value2"]),
+            endpoint: .init(baseURL: .stub, path: "path", queryParameters: ["param1": "value1"]),
             method: .post,
             body: .init(data: { data }),
             headers: ["key": "value"]
@@ -103,7 +103,7 @@ final class LiveAPIClientTests: XCTestCase {
 
         // Then
         XCTAssertEqual(string, "Test")
-        XCTAssertEqual(urlRequest?.url, URL(string: "http://www.example.com/path?param2=value2&param1=value1"))
+        XCTAssertEqual(urlRequest?.url, URL(string: "http://www.example.com/path?param1=value1"))
     }
 }
 
