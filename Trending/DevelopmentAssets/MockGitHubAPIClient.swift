@@ -5,7 +5,7 @@ import Model
 #if MOCK_API
  class MockGitHubAPIClient: GitHubAPIClient {
      func trendingRepos() async throws -> [Model.Repo] {
-         try await Task.sleep(nanoseconds: 500_000_000)
+         try await Task.sleep(nanoseconds: 1_000_000_000)
 
          return (1...25).compactMap { index -> Repo? in
              guard let avatarURL = Bundle.main.url(forResource: "avatar", withExtension: "png") else { return nil }
