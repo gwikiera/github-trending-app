@@ -18,7 +18,6 @@
   },
   "testTargets" : [
     {
-      "enabled" : false,
       "target" : {
         "containerPath" : "container:Trending.xcodeproj",
         "identifier" : "DEE485EA6D84B0358FD2ADEB",
@@ -26,7 +25,6 @@
       }
     },
     {
-      "enabled" : false,
       "target" : {
         "containerPath" : "container:GitHubAPIClient",
         "identifier" : "GitHubAPIClientTests",
@@ -34,18 +32,10 @@
       }
     },
     {
-      "enabled" : false,
       "target" : {
         "containerPath" : "container:Networking",
         "identifier" : "NetworkingTests",
         "name" : "NetworkingTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:Trending.xcodeproj",
-        "identifier" : "DD40472C377A527455B2E962",
-        "name" : "TrendingUITests"
       }
     }
   ],
