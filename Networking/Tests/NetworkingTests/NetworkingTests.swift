@@ -9,7 +9,7 @@ final class LiveAPIClientTests: XCTestCase {
         try await super.setUp()
 
         urlSession = URLSessionProtocolMock()
-        sut = LiveAPIClient(urlSession: urlSession, jsonDecoder: .init())
+        sut = LiveAPIClient(urlSession: urlSession, jsonDecoder: .init(), logger: nil)
     }
 
     func testFetch_withNetworkingError() async throws {

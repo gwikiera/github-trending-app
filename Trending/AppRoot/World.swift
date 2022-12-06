@@ -4,6 +4,7 @@ import Foundation
 import Networking
 import CombineSchedulers
 import GitHubAPIClient
+import Logging
 
 struct World {
     var gitHubApiClient: GitHubAPIClient = defaultGitHubAPIClient
@@ -28,10 +29,20 @@ var Current: World = {
 
 private var defaultGitHubAPIClient: GitHubAPIClient {
 #if OFFICIAL_API
-    return OfficialGitHubAPIClient(url: Bundle.main.baseURL, apiClient: LiveAPIClient())
+    return OfficialGitHubAPIClient(url: Bundle.main.baseURL, apiClient: apiClient)
 #elseif UNOFFICIAL_API
-    return UnofficialGitHubAPIClient(url: Bundle.main.baseURL, apiClient: LiveAPIClient())
+    return UnofficialGitHubAPIClient(url: Bundle.main.baseURL, apiClient: apiClient)
 #elseif MOCK_API
     return MockGitHubAPIClient()
 #endif
+}
+
+private var apiClient: APIClient {
+    var logger = Logger(label: #function)
+    #if DEBUG
+    logger.logLevel = .debug
+    #else
+    logger.logLevel = .error
+    #endif
+    return LiveAPIClient(logger: logger)
 }
