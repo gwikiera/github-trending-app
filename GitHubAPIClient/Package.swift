@@ -18,6 +18,10 @@ let package = Package(
     targets: [
         .target(
             name: "GitHubAPIClient",
+            dependencies: [
+                "Model",
+                "Networking"
+            ],
             resources: [
                 .process("Resources/colors.json")
             ]
