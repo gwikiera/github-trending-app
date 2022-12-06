@@ -19,10 +19,10 @@ public class LiveAPIClient: APIClient {
         self.jsonDecoder = jsonDecoder
     }
 
-    public func fetch<Model>(_ type: Model.Type, request: URLRequest) async throws -> Model where Model: Decodable {
+    public func fetch<Model>(_ type: Model.Type, urlRequest: URLRequest) async throws -> Model where Model: Decodable {
         let (data, response): (Data, URLResponse)
         do {
-            (data, response) = try await urlSession.data(for: request)
+            (data, response) = try await urlSession.data(for: urlRequest)
         } catch {
             throw APIClientError.networkingError(error)
         }

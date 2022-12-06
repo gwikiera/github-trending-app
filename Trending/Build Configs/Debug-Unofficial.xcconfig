@@ -2,5 +2,5 @@
 
 #include "Shared.xcconfig"
 
-BASE_URL = https:/$()/gh-trending-api.herokuapp.com/repositories
+BASE_URL = https:/$()/gh-trending-api.herokuapp.com
 SWIFT_ACTIVE_COMPILATION_CONDITIONS = $(inherited) DEBUG UNOFFICIAL_API

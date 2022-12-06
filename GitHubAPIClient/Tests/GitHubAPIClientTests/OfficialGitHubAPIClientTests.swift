@@ -9,7 +9,26 @@ final class OfficialGitHubAPIClientTests: XCTestCase {
 
     override func setUpWithError() throws {
         apiClient = MockAPIClient()
-        sut = OfficialGitHubAPIClient(url: url, apiClient: apiClient)
+        sut = OfficialGitHubAPIClient(
+            url: url,
+            apiClient: apiClient,
+            dateProvider: { Date(timeIntervalSince1970: .day * 30) }
+        )
+    }
+
+    func testTrendingRequest() async throws {
+        apiClient.fetchData = .failure(errorStub)
+
+        _ = try? await sut.trendingRepos()
+
+        let urlRequestSpy = apiClient.urlRequestSpy
+        let urlSpy = urlRequestSpy?.url
+        XCTAssertEqual(urlSpy?.host, "search")
+        XCTAssertEqual(urlSpy?.pathComponents, ["/", "repositories"])
+        XCTAssertEqual(urlSpy?.query?.components(separatedBy: "&").sorted(), ["order=desc", "q=created:%3E1970-01-01", "sort=stars"])
+        XCTAssertEqual(urlRequestSpy?.httpMethod, "GET")
+        XCTAssertNil(urlRequestSpy?.httpBody)
+        XCTAssertEqual(urlRequestSpy?.allHTTPHeaderFields, [:])
     }
 
     func testTrendingReposSuccess() async throws {
