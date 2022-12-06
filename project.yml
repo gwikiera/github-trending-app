@@ -4,6 +4,8 @@ options:
   bundleIdPrefix: com.gwikiera
   groupOrdering: 
     - order: [Packages, Trending, TrendingUnitTests, TrendingSnapshotTests, TrendingUITests, TestPlans, Shared, Build Configs, Products]
+    - pattern: '^Trending.*$'
+      order: [AppRoot, Features, Repositories, Helpers, Generated, Resources, DevelopmentAssets]
 
 configs:
   Debug: debug
