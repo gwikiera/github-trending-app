@@ -5,7 +5,7 @@ import Model
 
 @MainActor
 final class ReposListTests: XCTestCase {
-    var mockReposRepository: MockReposRepository! // swiftlint:disable:this implicitly_unwrapped_optional
+    var mockReposRepository: MockReposRepository!
 
     override func setUp() async throws {
         try await super.setUp()

@@ -73,7 +73,6 @@ private enum QueryItem {
 }
 
 // MARK: - DTO
-// swiftlint:disable nesting
 private struct ReposDTO: Decodable {
     struct Item: Decodable {
         struct Owner: Decodable {

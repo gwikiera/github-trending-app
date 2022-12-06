@@ -1,7 +1,6 @@
 import XCTest
 @testable import GitHubAPIClient
 
-// swiftlint:disable force_unwrapping implicitly_unwrapped_optional
 final class UnofficialGitHubAPIClientTests: XCTestCase {
     var url = URL(string: "localhost")!
     var apiClient: MockAPIClient!

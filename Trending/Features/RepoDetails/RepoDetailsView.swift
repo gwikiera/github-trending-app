@@ -3,7 +3,7 @@ import Model
 
 struct RepoDetailsView: View {
     struct ViewState: Equatable {
-        struct Language: Equatable { // swiftlint:disable:this nesting
+        struct Language: Equatable {
             let name: String
             let color: Color
         }

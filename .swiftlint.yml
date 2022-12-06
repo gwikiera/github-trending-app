@@ -76,5 +76,7 @@ enum_case_associated_values_count:
   error: 4
 cyclomatic_complexity:
   ignores_case_statements: true
-excluded: 
+excluded:
   - vendor
+nesting:
+  type_level: 3
