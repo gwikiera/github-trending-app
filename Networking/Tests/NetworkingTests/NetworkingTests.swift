@@ -1,7 +1,6 @@
 import XCTest
 @testable import Networking
 
-// swiftlint:disable implicitly_unwrapped_optional force_unwrapping
 final class LiveAPIClientTests: XCTestCase {
     var urlSession: URLSessionProtocolMock!
     var sut: LiveAPIClient!

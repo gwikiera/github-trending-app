@@ -3,7 +3,6 @@ import Networking
 import XCTest
 @testable import GitHubAPIClient
 
-// swiftlint:disable implicitly_unwrapped_optional
 class MockAPIClient: APIClient {
     var fetchData: Result<Data, Error>!
     var urlRequestSpy: URLRequest?

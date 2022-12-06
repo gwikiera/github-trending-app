@@ -3,7 +3,7 @@ import Model
 
 struct ReposList: ReducerProtocol {
     struct ViewState: Equatable {
-        enum CLE: Equatable { // swiftlint:disable:this nesting
+        enum CLE: Equatable {
             case content([RepoCell.ViewState])
             case loading
             case error

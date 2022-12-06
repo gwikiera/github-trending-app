@@ -2,7 +2,6 @@ import XCTest
 import Model
 @testable import Trending
 
-// swiftlint:disable implicitly_unwrapped_optional
 final class ReposListViewModelTests: XCTestCase {
     var sut: ReposListViewModel!
     var mockReposRepository: MockReposRepository!
