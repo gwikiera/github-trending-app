@@ -1,7 +1,6 @@
 #if DEBUG
 import CombineSchedulers
 import GitHubAPIClient
-import Model
 import XCTestDynamicOverlay
 import Combine
 

@@ -1,6 +1,5 @@
 import Foundation
 import GitHubAPIClient
-import Model
 
 class MockGitHubAPIClient: GitHubAPIClient {
     var fetchResult: Result<[Repo], Error>!
