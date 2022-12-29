@@ -66,10 +66,13 @@ struct RepoCell: View {
                     Image(systemName: "bookmark.fill")
                         .foregroundColor(Asset.primary.swiftUIColor)
                         .padding(.horizontal, 15)
+                        .transition(.asymmetric(
+                            insertion: .scale.animation(.interactiveSpring(response: 0.25, dampingFraction: 0.5)),
+                            removal: .scale
+                        ))
                 }
             }
         }
-        .animation(.default, value: viewState.bookmarked)
     }
 }
 
