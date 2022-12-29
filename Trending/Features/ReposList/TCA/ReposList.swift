@@ -22,8 +22,10 @@ struct ReposList: ReducerProtocol {
         case onAppear
         case fetchRepos
         case fetchReposResponse(TaskResult<Void>)
-        case fetchedRepos([Repo])
+        case fetchedRepos(repos: [Repo], bookmarks: [Repo.ID])
         case setSelectedRepoId(Repo.ID?)
+        case bookmarkRepoId(Repo.ID)
+        case removeBookmarkRepoId(Repo.ID)
     }
 
     @Dependency(\.reposRepository) private var reposRepository
@@ -33,6 +35,7 @@ struct ReposList: ReducerProtocol {
         switch action {
         case .onAppear:
             return reposRepository.repos()
+                .combineLatest(reposRepository.bookmarkedRepos())
                 .map(Action.fetchedRepos)
                 .receive(on: mainQueue)
                 .eraseToEffect()
@@ -53,11 +56,24 @@ struct ReposList: ReducerProtocol {
         case .fetchReposResponse(.failure):
             state.cle = .error
             return .none
-        case let .fetchedRepos(repos):
-            state.cle = .content(repos.map(\.repoCellViewState))
+        case let .fetchedRepos(repos, bookmarkedRepos):
+            let viewStates = repos
+                .map(\.repoCellViewState)
+                .map {
+                    var viewState = $0
+                    viewState.bookmarked = bookmarkedRepos.contains(viewState.id)
+                    return viewState
+                }
+            state.cle = .content(viewStates)
             return .none
         case let .setSelectedRepoId(repoId):
             state.selectedRepoId = repoId
+            return .none
+        case .bookmarkRepoId(let id):
+            reposRepository.bookmarkRepo(id)
+            return .none
+        case .removeBookmarkRepoId(let id):
+            reposRepository.removeBookmark(id)
             return .none
         }
     }

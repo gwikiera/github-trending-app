@@ -62,7 +62,21 @@ private struct ContentView: View {
                                 RepoDetailsView(viewState: selectedRepoViewState)
                             }
                         },
-                        label: { RepoCell(viewState: repoCellViewState) }
+                        label: {
+                            RepoCell(viewState: repoCellViewState)
+                                .swipeActions(edge: .leading) {
+                                    Button {
+                                        if repoCellViewState.bookmarked {
+                                            viewStore.send(.removeBookmarkRepoId(repoCellViewState.id))
+                                        } else {
+                                            viewStore.send(.bookmarkRepoId(repoCellViewState.id))
+                                        }
+                                    } label: {
+                                        Image(systemName: repoCellViewState.bookmarked ? "bookmark.slash" : "bookmark")
+                                    }
+                                    .tint(Asset.primary.swiftUIColor)
+                                }
+                        }
                     )
                 }
             }
@@ -108,8 +122,10 @@ extension ReposListViewTCA {
 #if DEBUG
 struct ReposListViewTCA_Previews: PreviewProvider {
     static var previews: some View {
-        ReposListViewTCA(store: .preview(.init(cle: .content(Array(repeating: RepoCell.ViewState.preview, count: 25)))))
-            .previewDisplayName("Content")
+        NavigationView {
+            ReposListViewTCA(store: .preview(.init(cle: .content(Array(repeating: RepoCell.ViewState.preview, count: 25)))))
+        }
+        .previewDisplayName("Content")
 
         ReposListViewTCA(store: .preview(.init(cle: .loading)))
             .previewDisplayName("Loading")

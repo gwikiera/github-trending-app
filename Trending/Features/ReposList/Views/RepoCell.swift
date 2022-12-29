@@ -1,5 +1,6 @@
 import SwiftUI
 import Model
+import DesignSystem
 
 struct RepoCell: View {
     struct ViewState: Equatable {
@@ -14,6 +15,7 @@ struct RepoCell: View {
         let language: Language?
         let stars: Int
         let forks: Int
+        var bookmarked: Bool
     }
 
     let viewState: ViewState
@@ -57,8 +59,17 @@ struct RepoCell: View {
                     Text("\(viewState.forks)")
                         .font(.subheadline)
                 }
+
+                Spacer(minLength: 0)
+
+                if viewState.bookmarked {
+                    Image(systemName: "bookmark.fill")
+                        .foregroundColor(Asset.primary.swiftUIColor)
+                        .padding(.horizontal, 15)
+                }
             }
         }
+        .animation(.default, value: viewState.bookmarked)
     }
 }
 
@@ -78,7 +89,8 @@ extension RepoCell.ViewState {
             description: "Python code to parse a Twitter archive and output in various ways",
             language: .init(name: "Python", color: .red),
             stars: 908,
-            forks: 36
+            forks: 36,
+            bookmarked: true
         )
     }
 }
