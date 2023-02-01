@@ -49,7 +49,7 @@ final class ReposListTests: XCTestCase {
 
         // MARK: Select repo
         await store.send(.setSelectedRepoId(repos.first?.id)) {
-            $0.selectedRepoId = repos.first?.id
+            $0.selectedRepoViewState = repos.first?.repoDetailsViewState
         }
 
         // Finish

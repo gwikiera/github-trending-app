@@ -10,12 +10,7 @@ struct ReposList: ReducerProtocol {
         }
 
         var cle: CLE
-        var selectedRepoId: Repo.ID?
-        var selectedRepoViewState: RepoDetailsView.ViewState? {
-            guard let selectedRepoId else { return nil }
-            @Dependency(\.reposRepository) var reposRepository
-            return reposRepository.repo(for: selectedRepoId)?.repoDetailsViewState
-        }
+        var selectedRepoViewState: RepoDetailsView.ViewState?
     }
 
     enum Action {
@@ -57,7 +52,7 @@ struct ReposList: ReducerProtocol {
             state.cle = .content(repos.map(\.repoCellViewState))
             return .none
         case let .setSelectedRepoId(repoId):
-            state.selectedRepoId = repoId
+            state.selectedRepoViewState = repoId.flatMap(reposRepository.repo)?.repoDetailsViewState
             return .none
         }
     }
