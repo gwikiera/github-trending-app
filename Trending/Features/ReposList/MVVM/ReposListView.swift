@@ -1,5 +1,6 @@
 import SwiftUI
 import DesignSystem
+import SwiftUINavigation
 
 struct ReposListView: View {
     typealias ViewState = [RepoCell.ViewState]
@@ -31,10 +32,8 @@ struct ReposListView: View {
     private func content(viewState: ViewState) -> some View {
         List {
             ForEach(viewState, id: \.name) { repoCellViewState in
-                NavigationLink {
-                    if let viewState = viewModel.repoDetailsViewState(for: repoCellViewState.id) {
-                        RepoDetailsView(viewState: viewState)
-                    }
+                Button {
+                    viewModel.repoTapped(repoCellViewState.id)
                 } label: {
                     RepoCell(viewState: repoCellViewState)
                 }
@@ -42,6 +41,11 @@ struct ReposListView: View {
         }
         .refreshable {
             await viewModel.fetchRepos()
+        }
+        .navigationDestination(
+            unwrapping: $viewModel.destination,
+            case: /ReposListViewModel.Destination.repoDetails) { $reposDetailsViewModel in
+                RepoDetailsView(viewState: reposDetailsViewModel)
         }
     }
 

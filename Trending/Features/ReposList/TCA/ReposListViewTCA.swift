@@ -15,7 +15,6 @@ struct ReposListViewTCA: View {
                         guard case let .content(cells) = viewState.cle else { return nil }
                         return .init(
                             cells: cells,
-                            selectedRepoId: viewState.selectedRepoId,
                             selectedRepoViewState: viewState.selectedRepoViewState
                         )
                     })) { store in
@@ -44,7 +43,6 @@ struct ReposListViewTCA: View {
 private struct ContentView: View {
     struct ViewState: Equatable {
         let cells: [RepoCell.ViewState]
-        let selectedRepoId: Repo.ID?
         let selectedRepoViewState: RepoDetailsView.ViewState?
     }
 
@@ -54,20 +52,24 @@ private struct ContentView: View {
         WithViewStore(store) { viewStore in
             List {
                 ForEach(viewStore.state.cells, id: \.name) { repoCellViewState in
-                    NavigationLink(
-                        tag: repoCellViewState.id,
-                        selection: viewStore.binding(get: \.selectedRepoId, send: { repoId in .setSelectedRepoId(repoId) }),
-                        destination: {
-                            if let selectedRepoViewState = viewStore.state.selectedRepoViewState {
-                                RepoDetailsView(viewState: selectedRepoViewState)
-                            }
-                        },
+                    Button(
+                        action: { viewStore.send(.setSelectedRepoId(repoCellViewState.id)) },
                         label: { RepoCell(viewState: repoCellViewState) }
                     )
                 }
             }
             .refreshable {
                 await viewStore.send(.fetchRepos).finish()
+            }
+            .navigationDestination(
+                unwrapping: viewStore.binding(
+                    get: \.selectedRepoViewState,
+                    send: { _ in
+                            .setSelectedRepoId(nil)
+                    }
+                )
+            ) { $selectedRepoViewState in
+                RepoDetailsView(viewState: selectedRepoViewState)
             }
         }
     }

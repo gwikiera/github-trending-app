@@ -14,7 +14,7 @@ class MockReposRepository: ReposRepositoryType {
     }
 
     func repo(for id: Repo.ID) -> Repo? {
-        return nil
+        reposSubject.value?.first(where: { $0.id == id })
     }
 
     func fetchRepos() async throws {

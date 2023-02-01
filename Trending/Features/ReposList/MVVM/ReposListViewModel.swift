@@ -9,7 +9,12 @@ class ReposListViewModel: ObservableObject {
         case error
     }
 
+    enum Destination {
+        case repoDetails(RepoDetailsView.ViewState)
+    }
+
     @Published var viewState: ViewState = .loading
+    @Published var destination: Destination?
 
     init() {
         bindData()
@@ -27,9 +32,9 @@ class ReposListViewModel: ObservableObject {
         }
     }
 
-    func repoDetailsViewState(for id: Repo.ID) -> RepoDetailsView.ViewState? {
-        guard let repo = Current.reposRepository.repo(for: id) else { return nil }
-        return repo.repoDetailsViewState
+    func repoTapped(_ repoId: Repo.ID) {
+        guard let repo = Current.reposRepository.repo(for: repoId) else { return }
+        destination = .repoDetails(repo.repoDetailsViewState)
     }
 
     private func bindData() {
