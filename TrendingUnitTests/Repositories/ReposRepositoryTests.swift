@@ -1,5 +1,6 @@
 import XCTest
 import Model
+import IdentifiedCollections
 @testable import Trending
 
 final class ReposRepositoryTests: XCTestCase {
@@ -16,8 +17,8 @@ final class ReposRepositoryTests: XCTestCase {
 
     func testFetchingData_whenSucceeded() async throws {
         // Given
-        let repos = Array(repeating: Repo.stub(), count: 10)
-        apiClient.fetchResult = .success(repos)
+        let repos = IdentifiedArray(uniqueElements: (1...10).map { Repo.stub(name: "repo\($0)") })
+        apiClient.fetchResult = .success(repos.elements)
 
         // When
         try await sut.fetchRepos()

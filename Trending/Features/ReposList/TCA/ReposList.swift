@@ -17,7 +17,7 @@ struct ReposList: ReducerProtocol {
         case onAppear
         case fetchRepos
         case fetchReposResponse(TaskResult<Void>)
-        case fetchedRepos([Repo])
+        case fetchedRepos(IdentifiedArrayOf<Repo>)
         case setSelectedRepoId(Repo.ID?)
     }
 

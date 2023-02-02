@@ -42,6 +42,9 @@ packages:
   SwiftUINavigation:
     url: "https://github.com/pointfreeco/swiftui-navigation"
     from: "0.4.5"
+  IdentifiedCollections:
+    url: "https://github.com/pointfreeco/swift-identified-collections"
+    from: "0.5.0"
 
 fileGroups: 
   - TestPlans
@@ -58,6 +61,7 @@ targets:
       - package: Model
       - package: GitHubAPIClient
       - package: SwiftUINavigation
+      - package: IdentifiedCollections
     sources: [Trending, Shared]
     postCompileScripts:
       - name: swiftlint

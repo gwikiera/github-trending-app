@@ -35,7 +35,7 @@ final class ReposListTests: XCTestCase {
         }
 
         // MARK: Fetch succeeded
-        let repos = Array(repeating: Repo.stub(), count: 10)
+        let repos = IdentifiedArray(uniqueElements: (1...10).map { Repo.stub(name: "repo\($0)") })
         mockReposRepository.fetchResult = .success(repos)
 
         await store.send(.fetchRepos) {

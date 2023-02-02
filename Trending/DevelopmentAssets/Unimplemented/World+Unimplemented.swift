@@ -3,6 +3,7 @@ import CombineSchedulers
 import GitHubAPIClient
 import XCTestDynamicOverlay
 import Combine
+import IdentifiedCollections
 
 extension World {
     static var unimplemented: Self {
@@ -22,7 +23,7 @@ private class UnimplementedGitHubAPIClient: GitHubAPIClient {
 }
 
 final class UnimplementedReposRepository: ReposRepositoryType {
-    func repos() -> AnyPublisher<[Model.Repo], Never> {
+    func repos() -> AnyPublisher<IdentifiedArrayOf<Model.Repo>, Never> {
         XCTFail("Unimplemented: \(Self.self).\(#function)")
         return Empty().eraseToAnyPublisher()
     }

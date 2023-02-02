@@ -1,5 +1,6 @@
 import XCTest
 import Model
+import IdentifiedCollections
 @testable import Trending
 
 final class ReposListViewModelTests: XCTestCase {
@@ -21,7 +22,7 @@ final class ReposListViewModelTests: XCTestCase {
 
     func testFetch_whenSucceeded() async throws {
         // Given
-        let repos = Array(repeating: Repo.stub(), count: 10)
+        let repos = IdentifiedArray(uniqueElements: (1...10).map { Repo.stub(name: "repo\($0)") })
         mockReposRepository.fetchResult = .success(repos)
 
         // When
@@ -32,7 +33,7 @@ final class ReposListViewModelTests: XCTestCase {
             XCTFail("Invalid state: \(sut.viewState)")
             return
         }
-        XCTAssertEqual(result, Array(repeating: .stub(), count: 10))
+        XCTAssertEqual(result, (1...10).map { RepoCell.ViewState.stub(name: "repo\($0)") })
     }
 
     func testFetch_whenFailed() async throws {

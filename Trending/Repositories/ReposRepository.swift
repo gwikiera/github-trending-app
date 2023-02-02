@@ -3,10 +3,11 @@
 import Foundation
 import Combine
 import Model
+import IdentifiedCollections
 
 protocol ReposRepositoryType {
     // Queries
-    func repos() -> AnyPublisher<[Repo], Never>
+    func repos() -> AnyPublisher<IdentifiedArrayOf<Repo>, Never>
     func repo(for id: Repo.ID) -> Repo?
 
     // Commands
@@ -14,21 +15,21 @@ protocol ReposRepositoryType {
 }
 
 final class ReposRepository: ReposRepositoryType {
-    private var reposSubject = CurrentValueSubject<[Repo]?, Never>(nil)
+    private var reposSubject = CurrentValueSubject<IdentifiedArrayOf<Repo>?, Never>(nil)
 
     // Queries
-    func repos() -> AnyPublisher<[Repo], Never> {
+    func repos() -> AnyPublisher<IdentifiedArrayOf<Repo>, Never> {
         return reposSubject
             .compactMap { $0 }
             .eraseToAnyPublisher()
     }
 
     func repo(for id: Repo.ID) -> Repo? {
-        reposSubject.value?.first { $0.id == id }
+        reposSubject.value?[id: id]
     }
 
     // Commands
     func fetchRepos() async throws {
-        reposSubject.value = try await Current.gitHubApiClient.trendingRepos()
+        reposSubject.value = .init(uniqueElements: try await Current.gitHubApiClient.trendingRepos())
     }
 }
