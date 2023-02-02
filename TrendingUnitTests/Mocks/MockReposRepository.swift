@@ -1,13 +1,14 @@
 import Foundation
 import Combine
 import Model
+import IdentifiedCollections
 @testable import Trending
 
 class MockReposRepository: ReposRepositoryType {
-    var fetchResult: Result<[Repo], Error> = .failure(errorStub)
-    private var reposSubject = CurrentValueSubject<[Repo]?, Never>(nil)
+    var fetchResult: Result<IdentifiedArrayOf<Repo>, Error> = .failure(errorStub)
+    private var reposSubject = CurrentValueSubject<IdentifiedArrayOf<Repo>?, Never>(nil)
 
-    func repos() -> AnyPublisher<[Repo], Never> {
+    func repos() -> AnyPublisher<IdentifiedArrayOf<Repo>, Never> {
         return reposSubject
             .compactMap { $0 }
             .eraseToAnyPublisher()
@@ -18,7 +19,7 @@ class MockReposRepository: ReposRepositoryType {
     }
 
     func fetchRepos() async throws {
-        reposSubject.value = try fetchResult.get()
+        reposSubject.value = .init(uniqueElements: try fetchResult.get())
     }
 
     func closeSubject() {
