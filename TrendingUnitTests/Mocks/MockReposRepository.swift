@@ -19,7 +19,7 @@ class MockReposRepository: ReposRepositoryType {
     }
 
     func fetchRepos() async throws {
-        reposSubject.value = .init(uniqueElements: try fetchResult.get()) 
+        reposSubject.value = .init(uniqueElements: try fetchResult.get())
     }
 
     func closeSubject() {
