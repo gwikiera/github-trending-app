@@ -35,21 +35,21 @@ final class ReposListTests: XCTestCase {
         }
 
         // MARK: Fetch succeeded
-        let repos = Array(repeating: Repo.stub(), count: 10)
+        let repos = IdentifiedArray(uniqueElements: (1...10).map { Repo.stub(name: "repo\($0)") })
         mockReposRepository.fetchResult = .success(repos)
 
         await store.send(.fetchRepos) {
             $0.cle = .loading
         }
 
-        await store.receive(.fetchedRepos(repos: repos, bookmarks: [])) {
+        await store.receive(.fetchedRepos(repos, bookmarks: [])) {
             $0.cle = .content(repos.map(\.repoCellViewState))
         }
         await store.receive(.fetchReposResponse(.success(())))
 
         // MARK: Select repo
         await store.send(.setSelectedRepoId(repos.first?.id)) {
-            $0.selectedRepoId = repos.first?.id
+            $0.selectedRepoViewState = repos.first?.repoDetailsViewState
         }
 
         // Finish

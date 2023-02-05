@@ -4,9 +4,7 @@ import SwiftUI
 struct TrendingApp: App {
     var body: some Scene {
         WindowGroup {
-            NavigationView {
-                RootView()
-            }
+            RootView()
         }
     }
 }

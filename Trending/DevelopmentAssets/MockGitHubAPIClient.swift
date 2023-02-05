@@ -1,6 +1,5 @@
 import Foundation
 import GitHubAPIClient
-import Model
 
 #if MOCK_API
  class MockGitHubAPIClient: GitHubAPIClient {

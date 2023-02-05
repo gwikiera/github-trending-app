@@ -19,7 +19,6 @@ struct RepoDetailsView: View {
     }
 
     let viewState: ViewState
-    @Environment(\.openURL) private var openURL
 
     var body: some View {
         ScrollView {
@@ -29,7 +28,7 @@ struct RepoDetailsView: View {
                         .resizable()
                         .frame(width: 40, height: 40)
 
-                    Button(action: { openURL(viewState.url) }) {
+                    Link(destination: viewState.url) {
                         Text(viewState.name)
                             .underline()
                             .multilineTextAlignment(.leading)
@@ -88,7 +87,7 @@ struct RepoDetailsView: View {
                             }
                         )
 
-                        Button(action: { openURL(author.url) }) {
+                        Link(destination: author.url) {
                             Text(author.username)
                                 .underline()
                                 .font(.subheadline)

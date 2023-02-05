@@ -1,6 +1,7 @@
 import Foundation
 import Combine
 import Model
+import IdentifiedCollections
 
 #if DEBUG
 extension World {
@@ -12,7 +13,7 @@ extension World {
 }
 
 class PreviewReposRepository: ReposRepositoryType {
-    func repos() -> AnyPublisher<[Repo], Never> {
+    func repos() -> AnyPublisher<IdentifiedArrayOf<Repo>, Never> {
         Empty().eraseToAnyPublisher()
     }
 

@@ -10,19 +10,14 @@ struct ReposList: ReducerProtocol {
         }
 
         var cle: CLE
-        var selectedRepoId: Repo.ID?
-        var selectedRepoViewState: RepoDetailsView.ViewState? {
-            guard let selectedRepoId else { return nil }
-            @Dependency(\.reposRepository) var reposRepository
-            return reposRepository.repo(for: selectedRepoId)?.repoDetailsViewState
-        }
+        var selectedRepoViewState: RepoDetailsView.ViewState?
     }
 
     enum Action {
         case onAppear
         case fetchRepos
         case fetchReposResponse(TaskResult<Void>)
-        case fetchedRepos(repos: [Repo], bookmarks: [Repo.ID])
+        case fetchedRepos(IdentifiedArrayOf<Repo>, bookmarks: [Repo.ID])
         case setSelectedRepoId(Repo.ID?)
         case bookmarkRepoId(Repo.ID)
         case removeBookmarkRepoId(Repo.ID)
@@ -67,7 +62,7 @@ struct ReposList: ReducerProtocol {
             state.cle = .content(viewStates)
             return .none
         case let .setSelectedRepoId(repoId):
-            state.selectedRepoId = repoId
+            state.selectedRepoViewState = repoId.flatMap(reposRepository.repo)?.repoDetailsViewState
             return .none
         case .bookmarkRepoId(let id):
             reposRepository.bookmarkRepo(id)
