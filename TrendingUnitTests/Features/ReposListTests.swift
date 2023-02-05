@@ -42,7 +42,7 @@ final class ReposListTests: XCTestCase {
             $0.cle = .loading
         }
 
-        await store.receive(.fetchedRepos(repos)) {
+        await store.receive(.fetchedRepos(repos, bookmarks: [])) {
             $0.cle = .content(repos.map(\.repoCellViewState))
         }
         await store.receive(.fetchReposResponse(.success(())))
@@ -52,8 +52,27 @@ final class ReposListTests: XCTestCase {
             $0.selectedRepoViewState = repos.first?.repoDetailsViewState
         }
 
-        // Finish
-        mockReposRepository.closeSubject()
+        // MARK: Bookmarks
+        await store.send(.bookmarkRepoId(repos[5].id))
+        await store.receive(.fetchedRepos(repos, bookmarks: ["repo6"])) {
+            guard var viewStates = $0.cle.viewStates else {
+                return
+            }
+            viewStates[5].bookmarked = true
+            $0.cle = .content(viewStates)
+        }
+
+        await store.send(.removeBookmarkRepoId(repos[5].id))
+        await store.receive(.fetchedRepos(repos, bookmarks: [])) {
+            guard var viewStates = $0.cle.viewStates else {
+                return
+            }
+            viewStates[5].bookmarked = false
+            $0.cle = .content(viewStates)
+        }
+
+        // MARK: Finish
+        mockReposRepository.closeSubjects()
         await store.finish()
     }
 }
@@ -69,12 +88,23 @@ extension ReposList.Action: Equatable {
             return true
         case (.fetchReposResponse(.failure(let lhsError)), .fetchReposResponse(.failure(let rhsError))):
             return lhsError is ErrorStub && rhsError is ErrorStub
-        case (.fetchedRepos(let lhsArray), .fetchedRepos(let rhsArray)):
-            return lhsArray == rhsArray
+        case let (.fetchedRepos(lhsRepos, lhsBookmarks), .fetchedRepos(rhsRepos, rhsBookmarks)):
+            return lhsRepos == rhsRepos && lhsBookmarks == rhsBookmarks
         case (.setSelectedRepoId(let lhsId), .setSelectedRepoId(let rhsId)):
             return lhsId == rhsId
         default:
             return false
+        }
+    }
+}
+
+private extension ReposList.ViewState.CLE {
+    var viewStates: [RepoCell.ViewState]? {
+        switch self {
+        case .content(let viewStates):
+            return viewStates
+        default:
+            return nil
         }
     }
 }

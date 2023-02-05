@@ -10,7 +10,8 @@ extension Repo {
             description: description,
             language: language.flatMap { .init(name: $0.name, color: Color(hex: $0.colorHex)) },
             stars: totalStars,
-            forks: forks
+            forks: forks,
+            bookmarked: false
         )
     }
 

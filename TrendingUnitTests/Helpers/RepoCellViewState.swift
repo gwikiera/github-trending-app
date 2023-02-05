@@ -7,7 +7,8 @@ extension RepoCell.ViewState {
         description: String? = nil,
         language: Language? = nil,
         stars: Int = .max,
-        forks: Int = 0
+        forks: Int = 0,
+        bookmarked: Bool = false
     ) -> RepoCell.ViewState {
         .init(
             id: name,
@@ -15,7 +16,8 @@ extension RepoCell.ViewState {
             description: description,
             language: language,
             stars: stars,
-            forks: forks
+            forks: forks,
+            bookmarked: bookmarked
         )
     }
 }

@@ -9,13 +9,17 @@ protocol ReposRepositoryType {
     // Queries
     func repos() -> AnyPublisher<IdentifiedArrayOf<Repo>, Never>
     func repo(for id: Repo.ID) -> Repo?
+    func bookmarkedRepos() -> AnyPublisher<Set<Repo.ID>, Never>
 
     // Commands
     func fetchRepos() async throws
+    func bookmarkRepo(_ id: Repo.ID)
+    func removeBookmark(_ id: Repo.ID)
 }
 
 final class ReposRepository: ReposRepositoryType {
     private var reposSubject = CurrentValueSubject<IdentifiedArrayOf<Repo>?, Never>(nil)
+    private var bookmarkedReposSubject = CurrentValueSubject<Set<Repo.ID>, Never>([])
 
     // Queries
     func repos() -> AnyPublisher<IdentifiedArrayOf<Repo>, Never> {
@@ -28,8 +32,25 @@ final class ReposRepository: ReposRepositoryType {
         reposSubject.value?[id: id]
     }
 
+    func bookmarkedRepos() -> AnyPublisher<Set<Repo.ID>, Never> {
+        bookmarkedReposSubject
+            .eraseToAnyPublisher()
+    }
+
     // Commands
     func fetchRepos() async throws {
         reposSubject.value = .init(uniqueElements: try await Current.gitHubApiClient.trendingRepos())
+    }
+
+    func bookmarkRepo(_ id: Model.Repo.ID) {
+        var favoriteRepos = self.bookmarkedReposSubject.value
+        favoriteRepos.insert(id)
+        self.bookmarkedReposSubject.value = favoriteRepos
+    }
+
+    func removeBookmark(_ id: Model.Repo.ID) {
+        var favoriteRepos = self.bookmarkedReposSubject.value
+        favoriteRepos.remove(id)
+        self.bookmarkedReposSubject.value = favoriteRepos
     }
 }

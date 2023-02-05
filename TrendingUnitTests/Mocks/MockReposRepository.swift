@@ -7,6 +7,7 @@ import IdentifiedCollections
 class MockReposRepository: ReposRepositoryType {
     var fetchResult: Result<IdentifiedArrayOf<Repo>, Error> = .failure(errorStub)
     private var reposSubject = CurrentValueSubject<IdentifiedArrayOf<Repo>?, Never>(nil)
+    private var bookmarksSubject = CurrentValueSubject<Set<Repo.ID>, Never>([])
 
     func repos() -> AnyPublisher<IdentifiedArrayOf<Repo>, Never> {
         return reposSubject
@@ -15,14 +16,33 @@ class MockReposRepository: ReposRepositoryType {
     }
 
     func repo(for id: Repo.ID) -> Repo? {
-        reposSubject.value?.first(where: { $0.id == id })
+        reposSubject.value?[id: id]
+    }
+
+    func bookmarkedRepos() -> AnyPublisher<Set<Repo.ID>, Never> {
+        return bookmarksSubject
+            .compactMap { $0 }
+            .eraseToAnyPublisher()
     }
 
     func fetchRepos() async throws {
         reposSubject.value = .init(uniqueElements: try fetchResult.get())
     }
 
-    func closeSubject() {
+    func bookmarkRepo(_ id: Model.Repo.ID) {
+        var bookmarks = bookmarksSubject.value
+        bookmarks.insert(id)
+        bookmarksSubject.value = bookmarks
+    }
+
+    func removeBookmark(_ id: Model.Repo.ID) {
+        var bookmarks = bookmarksSubject.value
+        bookmarks.remove(id)
+        bookmarksSubject.value = bookmarks
+    }
+
+    func closeSubjects() {
         reposSubject.send(completion: .finished)
+        bookmarksSubject.send(completion: .finished)
     }
 }
