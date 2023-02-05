@@ -17,7 +17,7 @@ struct ReposList: ReducerProtocol {
         case onAppear
         case fetchRepos
         case fetchReposResponse(TaskResult<Void>)
-        case fetchedRepos(IdentifiedArrayOf<Repo>, bookmarks: [Repo.ID])
+        case fetchedRepos(IdentifiedArrayOf<Repo>, bookmarks: Set<Repo.ID>)
         case setSelectedRepoId(Repo.ID?)
         case bookmarkRepoId(Repo.ID)
         case removeBookmarkRepoId(Repo.ID)
@@ -53,13 +53,14 @@ struct ReposList: ReducerProtocol {
             return .none
         case let .fetchedRepos(repos, bookmarkedRepos):
             let viewStates = repos
+                .lazy
                 .map(\.repoCellViewState)
                 .map {
                     var viewState = $0
                     viewState.bookmarked = bookmarkedRepos.contains(viewState.id)
                     return viewState
                 }
-            state.cle = .content(viewStates)
+            state.cle = .content(Array(viewStates))
             return .none
         case let .setSelectedRepoId(repoId):
             state.selectedRepoViewState = repoId.flatMap(reposRepository.repo)?.repoDetailsViewState

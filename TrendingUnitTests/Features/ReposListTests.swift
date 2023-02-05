@@ -62,6 +62,15 @@ final class ReposListTests: XCTestCase {
             $0.cle = .content(viewStates)
         }
 
+        await store.send(.removeBookmarkRepoId(repos[5].id))
+        await store.receive(.fetchedRepos(repos, bookmarks: [])) {
+            guard var viewStates = $0.cle.viewStates else {
+                return
+            }
+            viewStates[5].bookmarked = false
+            $0.cle = .content(viewStates)
+        }
+
         // MARK: Finish
         mockReposRepository.closeSubjects()
         await store.finish()

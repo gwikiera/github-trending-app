@@ -9,7 +9,7 @@ protocol ReposRepositoryType {
     // Queries
     func repos() -> AnyPublisher<IdentifiedArrayOf<Repo>, Never>
     func repo(for id: Repo.ID) -> Repo?
-    func bookmarkedRepos() -> AnyPublisher<[Repo.ID], Never>
+    func bookmarkedRepos() -> AnyPublisher<Set<Repo.ID>, Never>
 
     // Commands
     func fetchRepos() async throws
@@ -32,9 +32,8 @@ final class ReposRepository: ReposRepositoryType {
         reposSubject.value?[id: id]
     }
 
-    func bookmarkedRepos() -> AnyPublisher<[Model.Repo.ID], Never> {
+    func bookmarkedRepos() -> AnyPublisher<Set<Repo.ID>, Never> {
         bookmarkedReposSubject
-            .map(Array.init)
             .eraseToAnyPublisher()
     }
 

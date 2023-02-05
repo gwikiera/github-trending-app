@@ -33,7 +33,7 @@ final class UnimplementedReposRepository: ReposRepositoryType {
         return nil
     }
 
-    func bookmarkedRepos() -> AnyPublisher<[Model.Repo.ID], Never> {
+    func bookmarkedRepos() -> AnyPublisher<Set<Repo.ID>, Never> {
         XCTFail("Unimplemented: \(Self.self).\(#function)")
         return Empty().eraseToAnyPublisher()
     }

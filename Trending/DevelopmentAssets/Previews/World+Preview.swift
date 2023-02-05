@@ -21,7 +21,7 @@ class PreviewReposRepository: ReposRepositoryType {
         return nil
     }
 
-    func bookmarkedRepos() -> AnyPublisher<[Model.Repo.ID], Never> {
+    func bookmarkedRepos() -> AnyPublisher<Set<Repo.ID>, Never> {
         Empty().eraseToAnyPublisher()
     }
 
