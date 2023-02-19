@@ -5,6 +5,7 @@ struct RootView: View {
     enum Destination {
         case reposListMVVM
         case reposListTCA
+        case bookmarks
     }
 
     @State private var destination: Destination?
@@ -27,6 +28,15 @@ struct RootView: View {
                     }
                     .accessibilityIdentifier(A11yIDs.RootView.trendingReposTCA)
                 }
+
+                Section {
+                    Button {
+                        destination = .bookmarks
+                    } label: {
+                        Text(L10n.RootView.bookmarks.markdownFormatted)
+                    }
+                    .accessibilityIdentifier(A11yIDs.RootView.bookmarks)
+                }
             }
             .navigationDestination(
                 unwrapping: $destination,
@@ -39,6 +49,12 @@ struct RootView: View {
                 case: /Destination.reposListTCA,
                 destination: { _ in
                     ReposListViewTCA()
+                })
+            .navigationDestination(
+                unwrapping: $destination,
+                case: /Destination.bookmarks,
+                destination: { _ in
+                    BookmarksView()
                 })
             .listStyle(.inset)
             .navigationTitle(L10n.RootView.title)

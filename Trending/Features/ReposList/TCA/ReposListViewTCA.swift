@@ -125,7 +125,7 @@ extension ReposListViewTCA {
 struct ReposListViewTCA_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            ReposListViewTCA(store: .preview(.init(cle: .content(Array(repeating: RepoCell.ViewState.preview, count: 25)))))
+            ReposListViewTCA(store: .preview(.init(cle: .content(.preview))))
         }
         .previewDisplayName("Content")
 
