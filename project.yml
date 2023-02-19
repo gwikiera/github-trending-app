@@ -32,7 +32,7 @@ packages:
   # remote packages
   ComposableArchitecture:
     url: "https://github.com/pointfreeco/swift-composable-architecture"
-    from: "0.48.1"
+    from: "0.51.0"
   SnapshotTesting:
     url: "https://github.com/pointfreeco/swift-snapshot-testing"
     from: "1.11.0"
@@ -41,10 +41,10 @@ packages:
     from: "0.9.1"
   SwiftUINavigation:
     url: "https://github.com/pointfreeco/swiftui-navigation"
-    from: "0.4.5"
+    from: "0.6.1"
   IdentifiedCollections:
     url: "https://github.com/pointfreeco/swift-identified-collections"
-    from: "0.5.0"
+    from: "0.7.0"
 
 fileGroups: 
   - TestPlans
