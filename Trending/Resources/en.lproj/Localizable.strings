@@ -3,6 +3,7 @@
 "RootView.TrendingRepos.Title" = "Trending GitHub repos.";
 "RootView.MVVM" = "**MVVM** Version";
 "RootView.TCA" = "**TCA** Version";
+"RootView.Bookmarks" = "Bookmarks";
 
 // MARK: - Repos list
 "ReposList.Title" = "Trending repos";
@@ -12,3 +13,6 @@
 // MARK: - Repo details
 "RepoDetails.Rank" = "Rank";
 "RepoDetails.Authors" = "Authors";
+
+// MARK: - Bookmarks
+"Bookmarks.Title" = "Bookmarks";

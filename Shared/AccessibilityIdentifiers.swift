@@ -6,6 +6,7 @@ enum A11yIDs {
         static let navigationBarTitle = "Trending"
         static let trendingReposMVVM = "RootView.TrendingRepos.MVVM"
         static let trendingReposTCA = "RootView.TrendingRepos.TCA"
+        static let bookmarks = "RootView.TrendingRepos.Bookmarks"
     }
 
     enum RepoDetails {

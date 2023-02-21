@@ -62,6 +62,13 @@ final class TrendingSnapshotTests: XCTestCase {
 
         assertSnapshots(sut)
     }
+
+    // MARK: - BookmarksView
+    func testBookmarksView() {
+        let sut = BookmarksView(store: .preview(.init(reposViewStates: .preview)))
+
+        assertSnapshots(sut)
+    }
 }
 
 private extension XCTestCase {
