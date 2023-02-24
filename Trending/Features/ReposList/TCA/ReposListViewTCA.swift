@@ -122,18 +122,26 @@ extension ReposListViewTCA {
 }
 
 #if DEBUG
+import PreviewSnapshots
+
 struct ReposListViewTCA_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            ReposListViewTCA(store: .preview(.init(cle: .content(.preview))))
-        }
-        .previewDisplayName("Content")
+        snapshots.previews.previewLayout(.sizeThatFits)
+    }
 
-        ReposListViewTCA(store: .preview(.init(cle: .loading)))
-            .previewDisplayName("Loading")
-
-        ReposListViewTCA(store: .preview(.init(cle: .error)))
-            .previewDisplayName("Error")
+    static var snapshots: PreviewSnapshots<ReposList.ViewState.CLE> {
+        PreviewSnapshots(
+            configurations: [
+                .init(name: "Content", state: .content(.preview)),
+                .init(name: "Loading", state: .loading),
+                .init(name: "Error", state: .error)
+            ],
+            configure: { cle in
+                NavigationView {
+                    ReposListViewTCA(store: .preview(.init(cle: cle)))
+                }
+            }
+        )
     }
 }
 #endif

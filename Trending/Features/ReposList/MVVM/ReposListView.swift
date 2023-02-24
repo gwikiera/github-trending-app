@@ -74,16 +74,26 @@ struct ReposListView: View {
 }
 
 #if DEBUG
+import PreviewSnapshots
+
 struct ReposListView_Previews: PreviewProvider {
     static var previews: some View {
-        ReposListView(viewState: .content(.preview))
-            .previewDisplayName("Content")
+        snapshots.previews.previewLayout(.sizeThatFits)
+    }
 
-        ReposListView(viewState: .loading)
-            .previewDisplayName("Loading")
-
-        ReposListView(viewState: .error)
-            .previewDisplayName("Error")
+    static var snapshots: PreviewSnapshots<ReposListViewModel.ViewState> {
+        PreviewSnapshots(
+            configurations: [
+                .init(name: "Content", state: .content(.preview)),
+                .init(name: "Loading", state: .loading),
+                .init(name: "Error", state: .error)
+            ],
+            configure: { state in
+                NavigationView {
+                    ReposListView(viewState: state)
+                }
+            }
+        )
     }
 }
 

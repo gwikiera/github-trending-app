@@ -1,6 +1,8 @@
 import SnapshotTesting
 import SwiftUI
 import XCTest
+import PreviewSnapshots
+import PreviewSnapshotsTesting
 @testable import Trending
 
 final class TrendingSnapshotTests: XCTestCase {
@@ -13,74 +15,39 @@ final class TrendingSnapshotTests: XCTestCase {
 
     // MARK: - RootView
     func testRootView() {
-        let sut = RootView()
-
-        assertSnapshots(sut)
+        assertSnapshots(RootView_Previews.snapshots)
     }
 
     // MARK: - ReposListView
-    func testReposListView_Content() {
-        let sut = ReposListView(viewState: .content(.preview))
-
-        assertSnapshots(sut)
+    func testReposListView() {
+        assertSnapshots(ReposListView_Previews.snapshots)
     }
 
-    func testReposListView_Loading() {
-        let sut = ReposListView(viewState: .loading)
-
-        assertSnapshots(sut)
-    }
-
-    func testReposListView_Error() {
-        let sut = ReposListView(viewState: .error)
-
-        assertSnapshots(sut)
-    }
-
-    // MARK: - ReposListView
-    func testReposListViewTCA_Content() {
-        let sut = ReposListViewTCA(store: .preview(.init(cle: .content(.preview))))
-
-        assertSnapshots(sut)
-    }
-
-    func testReposListViewTCA_Loading() {
-        let sut = ReposListViewTCA(store: .preview(.init(cle: .loading)))
-
-        assertSnapshots(sut)
-    }
-
-    func testReposListViewTCA_Error() {
-        let sut = ReposListViewTCA(store: .preview(.init(cle: .error)))
-
-        assertSnapshots(sut)
+    // MARK: - ReposListViewTCA
+    func testReposListViewTCA() {
+        assertSnapshots(ReposListViewTCA_Previews.snapshots)
     }
 
     // MARK: - RepoDetailsView
     func testRepoDetails() {
-        let sut = RepoDetailsView(viewState: .preview)
-
-        assertSnapshots(sut)
+        assertSnapshots(RepoDetailsView_Previews.snapshots)
     }
 
     // MARK: - BookmarksView
     func testBookmarksView() {
-        let sut = BookmarksView(store: .preview(.init(reposViewStates: .preview)))
-
-        assertSnapshots(sut)
+        assertSnapshots(BookmarksView_Previews.snapshots)
     }
 }
 
 private extension XCTestCase {
     func assertSnapshots<Value> (
-        _ view: @autoclosure () -> Value,
+        _ snapshots: @autoclosure () -> PreviewSnapshots<Value>,
         record recording: Bool = false,
         file: StaticString = #file,
         testName: String = #function,
         line: UInt = #line
-    ) where Value: View {
-        SnapshotTesting.assertSnapshots(
-            matching: view().ignoresSafeArea(),
+    ) {
+        snapshots().assertSnapshots(
             as: [.image(precision: 0.99, perceptualPrecision: 0.99, layout: .device(config: .iPhone13Pro))],
             record: recording,
             file: file,

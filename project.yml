@@ -45,6 +45,12 @@ packages:
   IdentifiedCollections:
     url: "https://github.com/pointfreeco/swift-identified-collections"
     from: "0.7.0"
+  PreviewSnapshots:
+    url: "https://github.com/doordash-oss/swiftui-preview-snapshots"
+    from: "1.0.0"
+  PreviewSnapshotsTesting:
+    url: "https://github.com/doordash-oss/swiftui-preview-snapshots"
+    from: "1.0.0"
 
 fileGroups: 
   - TestPlans
@@ -62,6 +68,7 @@ targets:
       - package: GitHubAPIClient
       - package: SwiftUINavigation
       - package: IdentifiedCollections
+      - package: PreviewSnapshots
     sources: [Trending, Shared]
     postCompileScripts:
       - name: swiftlint
@@ -97,6 +104,7 @@ targets:
     dependencies:
       - target: Trending
       - package: SnapshotTesting
+      - package: PreviewSnapshotsTesting
     settings:
       # makes xcode use the only target as host app
       - TEST_HOST: ""
