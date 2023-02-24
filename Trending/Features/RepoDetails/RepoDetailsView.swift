@@ -106,9 +106,18 @@ struct RepoDetailsView: View {
 }
 
 #if DEBUG
+import PreviewSnapshots
+
 struct RepoDetailsView_Previews: PreviewProvider {
     static var previews: some View {
         RepoDetailsView(viewState: .preview)
+    }
+
+    static var snapshots: PreviewSnapshots<RepoDetailsView.ViewState> {
+        PreviewSnapshots(
+            configurations: [.init(name: "", state: .preview)],
+            configure: RepoDetailsView.init
+        )
     }
 }
 

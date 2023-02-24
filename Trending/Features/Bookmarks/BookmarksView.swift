@@ -49,11 +49,22 @@ extension BookmarksView {
 }
 
 #if DEBUG
+import PreviewSnapshots
+
 struct BookmarksView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            BookmarksView(store: .preview(.init(reposViewStates: .preview)))
-        }
+        snapshots.previews.previewLayout(.sizeThatFits)
+    }
+
+    static var snapshots: PreviewSnapshots<Bookmarks.ViewState> {
+        PreviewSnapshots(
+            configurations: [.init(name: "", state: .init(reposViewStates: .preview))],
+            configure: { viewState in
+                NavigationView {
+                    BookmarksView(store: .preview(viewState))
+                }
+            }
+        )
     }
 }
 #endif

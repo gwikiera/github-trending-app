@@ -63,9 +63,20 @@ struct RootView: View {
 }
 
 #if DEBUG
+import PreviewSnapshots
+
 struct RootView_Previews: PreviewProvider {
     static var previews: some View {
-        RootView()
+        snapshots.previews.previewLayout(.sizeThatFits)
+    }
+
+    static var snapshots: PreviewSnapshots<Void> {
+        PreviewSnapshots(
+            configurations: [.init(name: "", state: ())],
+            configure: { _ in
+                RootView()
+            }
+        )
     }
 }
 #endif
