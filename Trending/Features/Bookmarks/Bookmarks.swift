@@ -30,13 +30,7 @@ struct Bookmarks: ReducerProtocol {
                 .eraseToEffect()
         case let .fetchedRepos(repos):
             let viewStates = repos
-                .lazy
-                .map(\.repoCellViewState)
-                .map {
-                    var viewState = $0
-                    viewState.bookmarked = true
-                    return viewState
-                }
+                .map(\.bookmarkedRepoCellViewState)
             state.reposViewStates = Array(viewStates)
             return .none
         case let .setSelectedRepoId(repoId):
