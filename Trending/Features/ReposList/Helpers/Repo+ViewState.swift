@@ -3,7 +3,7 @@ import Model
 import SwiftUI
 
 extension Repo {
-    var repoCellViewState: RepoCell.ViewState {
+    func repoCellViewState(bookmarked: Bool) -> RepoCell.ViewState {
         RepoCell.ViewState(
             id: id,
             name: name,
@@ -11,8 +11,16 @@ extension Repo {
             language: language.flatMap { .init(name: $0.name, color: Color(hex: $0.colorHex)) },
             stars: totalStars,
             forks: forks,
-            bookmarked: false
+            bookmarked: bookmarked
         )
+    }
+
+    var repoCellViewState: RepoCell.ViewState {
+        repoCellViewState(bookmarked: false)
+    }
+
+    var bookmarkedRepoCellViewState: RepoCell.ViewState {
+        repoCellViewState(bookmarked: true)
     }
 
     var repoDetailsViewState: RepoDetailsView.ViewState {

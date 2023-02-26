@@ -53,13 +53,7 @@ struct ReposList: ReducerProtocol {
             return .none
         case let .fetchedRepos(repos, bookmarkedRepos):
             let viewStates = repos
-                .lazy
-                .map(\.repoCellViewState)
-                .map {
-                    var viewState = $0
-                    viewState.bookmarked = bookmarkedRepos.contains(viewState.id)
-                    return viewState
-                }
+                .map { $0.repoCellViewState(bookmarked: bookmarkedRepos.contains($0.id)) }
             state.cle = .content(Array(viewStates))
             return .none
         case let .setSelectedRepoId(repoId):

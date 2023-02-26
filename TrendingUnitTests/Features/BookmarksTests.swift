@@ -35,12 +35,7 @@ final class BookmarksTests: XCTestCase {
         // MARK: Fetch succeeded
         await store.receive(.fetchedRepos(repos: bookmarkedRepos)) {
             $0.reposViewStates = bookmarkedRepos
-                .map(\.repoCellViewState)
-                .map {
-                    var viewState = $0
-                    viewState.bookmarked = true
-                    return viewState
-                }
+                .map(\.bookmarkedRepoCellViewState)
         }
 
         // MARK: Select repo
@@ -53,12 +48,7 @@ final class BookmarksTests: XCTestCase {
         bookmarkedRepos = Array(bookmarkedRepos.dropFirst())
         await store.receive(.fetchedRepos(repos: bookmarkedRepos)) {
             $0.reposViewStates = bookmarkedRepos
-                .map(\.repoCellViewState)
-                .map {
-                    var viewState = $0
-                    viewState.bookmarked = true
-                    return viewState
-                }
+                .map(\.bookmarkedRepoCellViewState)
         }
 
         // MARK: Finish
